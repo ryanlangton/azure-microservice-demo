@@ -1,0 +1,62 @@
+version: '3.4'
+services:
+
+  rabbitmq:
+    image: masstransit/rabbitmq:latest
+    container_name: qesi-rabbitmq
+    ports:
+     - "5672:5672"
+     - "15672:15672"
+     - "15692:15692"
+
+  #TODO: fix the Quest docker package manager for the masstransit job manager
+  #masstransitjobmanager:
+  #  image: nonprodcrquestw.azurecr.io/qesi/masstransitjobmanager:4cabdf41
+  #  container_name: qesi-masstransitjobmanager
+  #  restart: on-failure
+  #  depends_on:
+  #   - sqlserver
+  #   - rabbitmq
+  #   - logserver
+  #  environment:
+  #   - AzureAppConfigurationConnectionString=Endpoint=https://dev-cfg-qes-w.azconfig.io;Id=PQl7-l1-s0:i8cQPQxEMS2pneZnY2AN;Secret=cjmviF72NBzHpVhRODvoBydNDSFWDsD/tLpwDEpG9TQ=
+  #   - System:Logging:SeqUri=http://logserver:5341
+  #   - System:Logging:LogLevel=Debug
+  #   - Service:MassTransitJobManager:SqlConnectionString__Server=sqlserver;Initial Catalog=QesiSystem;User Id=sa;Password=8jkGh47hnDw89Haq8LN2;
+  #   - System:ServiceBus:ServiceBusUri=rabbitmq://rabbitmq:5672
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: qesi-sqlserver
+    volumes:
+      - sqlserverdata:/var/opt/mssql 
+    ports:
+      - "1401:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+      - SA_PASSWORD=8jkGh47hnDw89Haq8LN2
+
+  logserver:
+    image: datalust/seq:latest
+    container_name: qesi-logserver
+    ports:
+      - "5342:80"
+    environment:
+      - ACCEPT_EULA=Y 
+
+  maildev:
+    image: maildev/maildev
+    container_name: qesi-emailserver
+    ports:
+      - "1025:25"
+      - "1080:80"
+
+networks:
+  database:
+    external:
+       name: qesi_default
+
+volumes:
+  sqlserverdata:
+  rabbitmqdata:
