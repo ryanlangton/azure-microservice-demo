@@ -3,18 +3,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Hosting;
-using QES.Demo.Contract;
-using QES.Demo.Contract.Outreach;
+using Demo.Contract;
+using Demo.Contract.Outreach;
 using ILogger = Serilog.ILogger;
 
-namespace QES.Demo.Publisher
+namespace Demo.Publisher
 {
     public class MessagePublisher : BackgroundService
     {
         private readonly ILogger _logger;
         private readonly IBusControl _bus;
         private readonly int ProviderId = 1;
-        
+
         public MessagePublisher(ILogger logger, IBusControl bus)
         {
             _logger = logger.ForContext<MessagePublisher>();
@@ -54,7 +54,7 @@ namespace QES.Demo.Publisher
 
                     if (userEntry == "Q")
                         break;
-                    
+
                     correlationId = await PublishSagaMessage(userEntry, stoppingToken, correlationId);
                 }
             }

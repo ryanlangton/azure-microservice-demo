@@ -6,8 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="MassTransit" Version="8.0.2" />
+    <PackageReference Include="MassTransit" Version="8.0.3" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
     <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
@@ -19,10 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QES.Demo.Contract\QES.Demo.Contract.csproj" />
-    <ProjectReference Include="..\QES.Demo.Domain\QES.Demo.Domain.csproj" />
-    <ProjectReference Include="..\QES.Logging\QES.Logging.csproj" />
-    <ProjectReference Include="..\QES.Messaging.ServiceBus\QES.Messaging.ServiceBus.csproj" />
+    <ProjectReference Include="..\Demo.Contract\Demo.Contract.csproj" />
+    <ProjectReference Include="..\Demo.Domain\Demo.Domain.csproj" />
   </ItemGroup>
 
 </Project>

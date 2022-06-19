@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QES.Demo.Provider.Model
+namespace Demo.Provider.Model
 {
     public class Provider
     {

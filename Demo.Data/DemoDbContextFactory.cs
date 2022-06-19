@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace QES.Demo.Data
+namespace Demo.Data
 {
     // <summary>
     // This is used to create migrations locally

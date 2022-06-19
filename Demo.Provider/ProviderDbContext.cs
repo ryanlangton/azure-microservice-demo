@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace QES.Demo.Provider
+namespace Demo.Provider
 {
     public class ProviderDbContext : DbContext
     {

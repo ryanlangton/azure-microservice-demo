@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MassTransit;
 
-namespace QES.Demo.Saga.Model
+namespace Demo.Saga.Model
 {
     public class OutreachState : SagaStateMachineInstance
     {

@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using System;
 
-namespace QES.Demo.Contract
+namespace Demo.Contract
 {
     public interface DemoMessage : CorrelatedBy<Guid>
     {

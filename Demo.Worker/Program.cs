@@ -6,16 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.FeatureManagement;
-using QES.Demo.Domain.Configuration;
-using QES.Demo.Domain.Extensions;
-using QES.Demo.Provider;
-using QES.Demo.Provider.Extensions;
-using QES.Demo.Saga;
-using QES.Demo.Saga.Extensions;
-using QES.Demo.Saga.Model;
-using QES.EntityFramework.Extensions;
-using QES.Logging.Extensions;
-using QES.Messaging.ServiceBus.Extensions;
+using Demo.Domain.Configuration;
+using Demo.Domain.Extensions;
+using Demo.Provider;
+using Demo.Provider.Extensions;
+using Demo.Saga;
+using Demo.Saga.Extensions;
+using Demo.Saga.Model;
 
 var builder = Host.CreateDefaultBuilder(args);
 builder.ConfigureAppConfiguration((hostContext, config) =>
@@ -26,34 +23,37 @@ builder.ConfigureAppConfiguration((hostContext, config) =>
             .AddJsonFile("appsettings.json")
             .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
     })
-    .ConfigureQesLogging("Demo Worker")
+    //.ConfigureQesLogging("Demo Worker")
     .ConfigureServices((hostContext, services) =>
     {
         // Adding custom app config
-        services.Configure<DemoConfiguration>(hostContext.Configuration.GetSection(DemoConstants.ConfigKey));
+        services.Configure<AppConfiguration>(hostContext.Configuration.GetSection("AppSettings"));
         var healthChecks = services.AddHealthChecks();
 
         // Add QES demo services
         services.AddDemoDomain();
         var connectionString = hostContext.Configuration.GetConnectionString("DemoDb");
-        services.AddProviderData(hostContext.HostingEnvironment, healthChecks, connectionString);
-        services.AddSagaData(hostContext.HostingEnvironment, healthChecks, connectionString);
+        services.AddProviderData(healthChecks, connectionString);
+        services.AddSagaData(healthChecks, connectionString);
 
         // Add MT service bus
-        services.AddQesServiceBus(hostContext.Configuration, config =>
+        services.AddMassTransit(mt =>
         {
-            config.AddSagaStateMachine<OutreachStateMachine, OutreachState>()
-                .EntityFrameworkRepository(r =>
+            mt.AddDelayedMessageScheduler();
+
+            mt.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(hostContext.Configuration.GetValue<string>("ServiceBus:Uri"), host =>
                 {
-                    r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
-                    r.ExistingDbContext<OutreachStateDbContext>();
-                    r.CustomizeQuery(q =>
-                    {
-                        return q
-                            .Include(o => o.OutreachEmailAttempts)
-                            .Include(o => o.OutreachPhoneAttempts);
-                    });
+                    host.Username("guest");
+                    host.Password("guest");
                 });
+                cfg.UseDelayedMessageScheduler();
+                cfg.UseInMemoryOutbox();
+                cfg.ConfigureEndpoints(context);
+            });
+
+            mt.AddConsumers(Assembly.GetEntryAssembly());
         });
 
         // Add external services
@@ -65,9 +65,9 @@ builder.ConfigureAppConfiguration((hostContext, config) =>
 try
 {
     builder.Build()
-        .ApplyDbContextMigrations<ProviderDbContext>()
+        //.ApplyDbContextMigrations<ProviderDbContext>()
         .AddProviderSeedData()
-        .ApplyDbContextMigrations<OutreachStateDbContext>()
+        //.ApplyDbContextMigrations<OutreachStateDbContext>()
         .ValidateAutomapper()
         .Run();
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace QES.Demo.Provider.Extensions
+namespace Demo.Provider.Extensions
 {
     public static class HostExtensions
     {

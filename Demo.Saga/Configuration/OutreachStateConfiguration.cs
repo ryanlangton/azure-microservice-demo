@@ -1,9 +1,9 @@
-﻿using MassTransit;
+﻿using Demo.Saga.Model;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using QES.Demo.Saga.Model;
 
-namespace QES.Demo.Saga.Configuration
+namespace Demo.Saga.Configuration
 {
     public class OutreachStateConfiguration : SagaClassMap<OutreachState>
     {

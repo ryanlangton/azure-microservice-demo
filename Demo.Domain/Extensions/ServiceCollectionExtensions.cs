@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace QES.Demo.Domain.Extensions
+namespace Demo.Domain.Extensions
 {
     public static class ServiceCollectionExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
-namespace QES.Demo.Data
+namespace Demo.Data
 {
     public class DemoDbContext : DbContext
     {

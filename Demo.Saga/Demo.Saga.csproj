@@ -8,12 +8,12 @@
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
     <PackageReference Include="MassTransit.Abstractions" Version="8.0.2" />
     <PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Scrutor" Version="4.2.0" />
@@ -24,9 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QES.Demo.Contract\QES.Demo.Contract.csproj" />
-    <ProjectReference Include="..\QES.Demo.Provider\QES.Demo.Provider.csproj" />
-    <ProjectReference Include="..\QES.EntityFramework\QES.EntityFramework.csproj" />
+    <ProjectReference Include="..\Demo.Contract\Demo.Contract.csproj" />
   </ItemGroup>
 
 </Project>

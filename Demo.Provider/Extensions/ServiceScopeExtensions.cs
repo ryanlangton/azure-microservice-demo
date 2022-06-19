@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace QES.Demo.Provider.Extensions
+namespace Demo.Provider.Extensions
 {
     public static class ServiceScopeExtensions
     {
@@ -19,7 +18,7 @@ namespace QES.Demo.Provider.Extensions
             return scope;
         }
 
-        private static async Task AddProviderSeedData(ProviderDbContext dbContext)
+        private static void AddProviderSeedData(ProviderDbContext dbContext)
         {
             try
             {
@@ -31,7 +30,7 @@ namespace QES.Demo.Provider.Extensions
                     dbContext.Providers.Add(new Model.Provider
                     {
                         Id = 1,
-                        EmailAddress = "test@questanalytics.com",
+                        EmailAddress = "test@gmail.com",
                         PhoneNumber = "704-560-2464"
                     });
 

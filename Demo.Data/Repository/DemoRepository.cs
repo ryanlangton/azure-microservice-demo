@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QES.Demo.Data.Repository
+namespace Demo.Data.Repository
 {
     public class DemoRepository
     {

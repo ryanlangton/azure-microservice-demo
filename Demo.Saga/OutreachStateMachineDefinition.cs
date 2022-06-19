@@ -1,8 +1,8 @@
 ﻿using System;
+using Demo.Saga.Model;
 using MassTransit;
-using QES.Demo.Saga.Model;
 
-namespace QES.Demo.Saga
+namespace Demo.Saga
 {
     public class OutreachStateMachineDefinition : SagaDefinition<OutreachState>
     {

@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 
-namespace QES.Demo.Worker.Consumers
+namespace Demo.Worker.Consumers
 {
     public class DemoConsumerDefinition : ConsumerDefinition<DemoConsumer>
     {

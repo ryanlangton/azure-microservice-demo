@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace QES.Demo.Saga
+namespace Demo.Saga
 {
     // <summary>
     // This is used to create migrations locally

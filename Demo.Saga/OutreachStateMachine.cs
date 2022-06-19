@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
+using Demo.Saga.Model;
 using MassTransit;
-using QES.Demo.Contract.Outreach;
-using QES.Demo.Contract.Outreach.Consumer;
-using QES.Demo.Saga.Model;
+using Demo.Contract.Outreach;
+using Demo.Contract.Outreach.Consumer;
 
-namespace QES.Demo.Saga
+namespace Demo.Saga
 {
     public class OutreachStateMachine : MassTransitStateMachine<OutreachState>
     {
@@ -27,7 +27,7 @@ namespace QES.Demo.Saga
                     })
                     .PublishAsync(async context =>
                         await context.Init<GetProviderData>(
-                            new {context.Saga.CorrelationId, context.Message.ProviderId}))
+                            new { context.Saga.CorrelationId, context.Message.ProviderId }))
                     .TransitionTo(RetrievingProviderInfo));
 
             During(RetrievingProviderInfo,
@@ -42,7 +42,7 @@ namespace QES.Demo.Saga
                     .Then(context =>
                     {
                         context.Saga.OutreachEmailAttempts.Add(new OutreachEmailAttempt()
-                            {DateAttempted = DateTime.UtcNow});
+                        { DateAttempted = DateTime.UtcNow });
                     }),
                 When(OutreachEmailSuccess)
                     .Then(context =>
@@ -58,7 +58,7 @@ namespace QES.Demo.Saga
                     .Then(context =>
                     {
                         context.Saga.OutreachPhoneAttempts.Add(new OutreachPhoneAttempt()
-                            {DateAttempted = DateTime.UtcNow});
+                        { DateAttempted = DateTime.UtcNow });
                     }),
                 When(OutreachPhoneCallSuccess)
                     .Then(context =>

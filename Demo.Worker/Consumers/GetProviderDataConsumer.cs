@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using QES.Demo.Contract.Outreach.Consumer;
-using QES.Demo.Provider;
+using Demo.Contract.Outreach.Consumer;
+using Demo.Provider;
 
-namespace QES.Demo.Worker.Consumers
+namespace Demo.Worker.Consumers
 {
     public class GetProviderDataConsumer : IConsumer<GetProviderData>
     {
@@ -19,7 +19,7 @@ namespace QES.Demo.Worker.Consumers
         {
             var provider = await _dbContext.Providers.FirstAsync(p => p.Id == context.Message.ProviderId);
             var providerData = new
-                {context.Message.CorrelationId, provider.EmailAddress, provider.PhoneNumber};
+            { context.Message.CorrelationId, provider.EmailAddress, provider.PhoneNumber };
             await context.Publish<GetProviderDataSuccess>(providerData);
         }
     }

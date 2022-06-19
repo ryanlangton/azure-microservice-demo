@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using MassTransit;
-using QES.Demo.Contract;
+using Demo.Contract;
 using ILogger = Serilog.ILogger;
 
-namespace QES.Demo.Worker.Consumers
+namespace Demo.Worker.Consumers
 {
     public class DemoConsumer : IConsumer<DemoMessage>
     {

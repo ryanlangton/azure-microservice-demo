@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
-using QES.Demo.Contract.Outreach;
-using QES.Demo.Provider;
+using Demo.Contract.Outreach;
+using Demo.Provider;
 
-namespace QES.Demo.Worker.Consumers
+namespace Demo.Worker.Consumers
 {
     public class UpdateContactInfoConsumer : IConsumer<UpdateContactInformation>
     {

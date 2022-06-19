@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace QES.Demo.Domain.Extensions
+namespace Demo.Domain.Extensions
 {
     public static class HostExtensions
     {

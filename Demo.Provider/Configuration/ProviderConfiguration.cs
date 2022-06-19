@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace QES.Demo.Provider.Configuration
+namespace Demo.Provider.Configuration
 {
     public class ProviderConfiguration : IEntityTypeConfiguration<Model.Provider>
     {

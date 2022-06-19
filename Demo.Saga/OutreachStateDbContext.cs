@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
-using QES.Demo.Saga.Configuration;
+using Demo.Saga.Configuration;
 
-namespace QES.Demo.Saga
+namespace Demo.Saga
 {
     public class OutreachStateDbContext : SagaDbContext
     {

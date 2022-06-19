@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QES.Demo.Saga.Model
+namespace Demo.Saga.Model
 {
     public class OutreachEmailAttempt
     {
