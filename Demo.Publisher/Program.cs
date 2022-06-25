@@ -8,6 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.FeatureManagement;
+using Serilog;
+using Serilog.Events;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
 var builder = Host.CreateDefaultBuilder();
 
@@ -15,18 +23,22 @@ builder.ConfigureAppConfiguration((hostingContext, config) =>
     {
         var settings = config.Build();
         var connection = settings.GetConnectionString("AppConfig");
-        config.AddAzureAppConfiguration(opt => opt.Connect(connection).UseFeatureFlags(), optional: true)
+        config
+            //.AddAzureAppConfiguration(opt => opt.Connect(connection).UseFeatureFlags(), optional: true)
             .AddJsonFile("appsettings.json")
             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true);
     })
-    //.ConfigureQesLogging("Demo Worker")
+    .UseSerilog((context, services, configuration) => configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console())
     .ConfigureServices((hostContext, services) =>
     {
         // Adding custom app config
         services.Configure<AppConfiguration>(hostContext.Configuration.GetSection("AppSettings"));
-        var healthChecks = services.AddHealthChecks();
-
-        // Add QES demo services
+        
+        services.AddHealthChecks();
         services.AddDemoDomain();
 
         // Add MT service bus
@@ -51,7 +63,7 @@ builder.ConfigureAppConfiguration((hostingContext, config) =>
         services.AddHttpClient();
         services.AddFeatureManagement();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+        //services.AddSingleton(Log.Logger);
         services.AddHostedService<MessagePublisher>();
     });
 

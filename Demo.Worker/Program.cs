@@ -8,11 +8,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.FeatureManagement;
 using Demo.Domain.Configuration;
 using Demo.Domain.Extensions;
-using Demo.Provider;
 using Demo.Provider.Extensions;
-using Demo.Saga;
 using Demo.Saga.Extensions;
-using Demo.Saga.Model;
+using Serilog;
+using Serilog.Events;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
 var builder = Host.CreateDefaultBuilder(args);
 builder.ConfigureAppConfiguration((hostContext, config) =>
@@ -23,20 +28,24 @@ builder.ConfigureAppConfiguration((hostContext, config) =>
             .AddJsonFile("appsettings.json")
             .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
     })
-    //.ConfigureQesLogging("Demo Worker")
+    .UseSerilog((context, services, configuration) => configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console())
     .ConfigureServices((hostContext, services) =>
     {
         // Adding custom app config
         services.Configure<AppConfiguration>(hostContext.Configuration.GetSection("AppSettings"));
         var healthChecks = services.AddHealthChecks();
 
-        // Add QES demo services
+        // Add demo services
         services.AddDemoDomain();
         var connectionString = hostContext.Configuration.GetConnectionString("DemoDb");
         services.AddProviderData(healthChecks, connectionString);
         services.AddSagaData(healthChecks, connectionString);
 
-        // Add MT service bus
+        // Add MT service bus 
         services.AddMassTransit(mt =>
         {
             mt.AddDelayedMessageScheduler();
@@ -65,9 +74,8 @@ builder.ConfigureAppConfiguration((hostContext, config) =>
 try
 {
     builder.Build()
-        //.ApplyDbContextMigrations<ProviderDbContext>()
-        .AddProviderSeedData()
-        //.ApplyDbContextMigrations<OutreachStateDbContext>()
+        .RunProviderDbMigrations()
+        .RunSagaDbMigrations()
         .ValidateAutomapper()
         .Run();
 }

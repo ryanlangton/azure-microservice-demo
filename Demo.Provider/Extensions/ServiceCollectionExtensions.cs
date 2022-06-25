@@ -19,7 +19,7 @@ namespace Demo.Provider.Extensions
 
             services.Scan(scan =>
                 scan.FromAssemblyOf<ProviderDbContext>()
-                    .AddClasses(false)
+                    .AddClasses()
                     .AsMatchingInterface()
                     .WithScopedLifetime());
 

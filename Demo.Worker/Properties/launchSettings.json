@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "QES.Demo.Worker": {
+    "Demo.Worker": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"

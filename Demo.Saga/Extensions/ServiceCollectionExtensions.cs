@@ -19,7 +19,7 @@ namespace Demo.Saga.Extensions
 
             services.Scan(scan =>
                 scan.FromAssemblyOf<OutreachStateDbContext>()
-                    .AddClasses(false)
+                    .AddClasses()
                     .AsMatchingInterface()
                     .WithScopedLifetime());
 
