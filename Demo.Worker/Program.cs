@@ -5,9 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.FeatureManagement;
-using Demo.Domain.Configuration;
-using Demo.Domain.Extensions;
 using Demo.Provider.Extensions;
 using Demo.Saga.Extensions;
 using Serilog;
@@ -22,11 +19,8 @@ Log.Logger = new LoggerConfiguration()
 var builder = Host.CreateDefaultBuilder(args);
 builder.ConfigureAppConfiguration((hostContext, config) =>
     {
-        var settings = config.Build();
-        var connection = settings.GetConnectionString("AppConfig");
-        config.AddAzureAppConfiguration(opt => opt.Connect(connection).UseFeatureFlags(), optional: true)
-            .AddJsonFile("appsettings.json")
-            .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+        config.AddJsonFile("appsettings.json")
+              .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
     })
     .UseSerilog((context, services, configuration) => configuration
         .ReadFrom.Configuration(context.Configuration)
@@ -35,12 +29,7 @@ builder.ConfigureAppConfiguration((hostContext, config) =>
         .WriteTo.Console())
     .ConfigureServices((hostContext, services) =>
     {
-        // Adding custom app config
-        services.Configure<AppConfiguration>(hostContext.Configuration.GetSection("AppSettings"));
         var healthChecks = services.AddHealthChecks();
-
-        // Add demo services
-        services.AddDemoDomain();
         var connectionString = hostContext.Configuration.GetConnectionString("DemoDb");
         services.AddProviderData(healthChecks, connectionString);
         services.AddSagaData(healthChecks, connectionString);
@@ -64,11 +53,6 @@ builder.ConfigureAppConfiguration((hostContext, config) =>
 
             mt.AddConsumers(Assembly.GetEntryAssembly());
         });
-
-        // Add external services
-        services.AddHttpClient();
-        services.AddFeatureManagement();
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
     });
 
 try
@@ -76,7 +60,6 @@ try
     builder.Build()
         .RunProviderDbMigrations()
         .RunSagaDbMigrations()
-        .ValidateAutomapper()
         .Run();
 }
 catch (Exception e)

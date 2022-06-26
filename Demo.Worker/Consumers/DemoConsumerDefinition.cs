@@ -6,7 +6,7 @@ namespace Demo.Worker.Consumers
     {
         protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<DemoConsumer> consumerConfigurator)
         {
-            endpointConfigurator.ConcurrentMessageLimit = 1;
+            endpointConfigurator.ConcurrentMessageLimit = 5;
         }
     }
 }

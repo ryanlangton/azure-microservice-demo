@@ -30,13 +30,13 @@ namespace Demo.Publisher
                 while (true)
                 {
                     Console.WriteLine("What would you like to do?");
-                    Console.WriteLine("A) Begin a new outreach");
-                    Console.WriteLine("B) Request email outreach");
-                    Console.WriteLine("C) Report email outreach success");
-                    Console.WriteLine("D) Request phone outreach");
-                    Console.WriteLine("E) Report phone outreach success");
-                    Console.WriteLine("F) Update contact information");
-                    Console.WriteLine("Try scaling (type any number from 1-200+)");
+                    //Console.WriteLine("A) Begin a new outreach");
+                    //Console.WriteLine("B) Request email outreach");
+                    //Console.WriteLine("C) Report email outreach success");
+                    //Console.WriteLine("D) Request phone outreach");
+                    //Console.WriteLine("E) Report phone outreach success");
+                    //Console.WriteLine("F) Update contact information");
+                    Console.WriteLine("Send X demo messages (type any number from 1-200+)");
                     Console.WriteLine("Q to Quit");
 
                     var userEntry = Console.ReadLine();

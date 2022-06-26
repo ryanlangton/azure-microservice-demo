@@ -19,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Demo.Contract\Demo.Contract.csproj" />
-    <ProjectReference Include="..\Demo.Domain\Demo.Domain.csproj" />
     <ProjectReference Include="..\Demo.Provider\Demo.Provider.csproj" />
     <ProjectReference Include="..\Demo.Saga\Demo.Saga.csproj" />
   </ItemGroup>

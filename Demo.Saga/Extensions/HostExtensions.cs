@@ -9,10 +9,8 @@ namespace Demo.Saga.Extensions
         public static IHost RunSagaDbMigrations(this IHost host)
         {
             using var scope = host.Services.CreateScope();
-            {
-                using var dbContext = scope.ServiceProvider.GetRequiredService<OutreachStateDbContext>();
-                dbContext.Database.Migrate();
-            }
+            using var dbContext = scope.ServiceProvider.GetRequiredService<OutreachStateDbContext>();
+            dbContext.Database.Migrate();
             return host;
         }
     }
