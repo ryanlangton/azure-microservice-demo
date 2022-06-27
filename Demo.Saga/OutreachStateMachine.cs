@@ -40,10 +40,9 @@ namespace Demo.Saga
             During(OutreachNeeded,
                 When(StartOutreachEmail)
                     .Then(context =>
-                    {
-                        context.Saga.OutreachEmailAttempts.Add(new OutreachEmailAttempt()
-                        { DateAttempted = DateTime.UtcNow });
-                    }),
+                        context.Saga.OutreachEmailAttempts.Add(new OutreachEmailAttempt() { DateAttempted = DateTime.UtcNow })
+                    ),
+                    // TODO: publish a message to trigger email outreach
                 When(OutreachEmailSuccess)
                     .Then(context =>
                     {
@@ -56,10 +55,9 @@ namespace Demo.Saga
                     .Finalize(),
                 When(StartOutreachPhoneCall)
                     .Then(context =>
-                    {
-                        context.Saga.OutreachPhoneAttempts.Add(new OutreachPhoneAttempt()
-                        { DateAttempted = DateTime.UtcNow });
-                    }),
+                        context.Saga.OutreachPhoneAttempts.Add(new OutreachPhoneAttempt() { DateAttempted = DateTime.UtcNow })
+                    ),
+                    // TODO: publish a message to trigger phone outreach
                 When(OutreachPhoneCallSuccess)
                     .Then(context =>
                     {
