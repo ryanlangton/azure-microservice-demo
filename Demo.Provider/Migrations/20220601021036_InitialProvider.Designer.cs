@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace QES.Demo.Provider.Migrations
 {
     [DbContext(typeof(ProviderDbContext))]
-    [Migration("20220601021036_Initial")]
+    [Migration("20220601021036_InitialProvider")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

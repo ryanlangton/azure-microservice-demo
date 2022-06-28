@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace QES.Demo.Saga.Migrations
 {
     [DbContext(typeof(OutreachStateDbContext))]
-    [Migration("20220601152637_Initial")]
+    [Migration("20220601152637_InitialSaga")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
