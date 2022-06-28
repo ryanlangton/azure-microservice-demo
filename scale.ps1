@@ -1,0 +1,7 @@
+dotnet run --no-build --project ./Demo.Worker/Demo.Worker.csproj --property:Configuration=Development --urls="https://localhost:5672"
+dotnet run --no-build --project ./Demo.Worker/Demo.Worker.csproj --property:Configuration=Development --urls="https://localhost:5673"
+dotnet run --no-build --project ./Demo.Worker/Demo.Worker.csproj --property:Configuration=Development --urls="https://localhost:5674"
+dotnet run --no-build --project ./Demo.Worker/Demo.Worker.csproj --property:Configuration=Development --urls="https://localhost:5675"
+dotnet run --no-build --project ./Demo.Worker/Demo.Worker.csproj --property:Configuration=Development --urls="https://localhost:5676"
+dotnet run --no-build --project ./Demo.Worker/Demo.Worker.csproj --property:Configuration=Development --urls="https://localhost:5677"
+dotnet run --no-build --project ./Demo.Worker/Demo.Worker.csproj --property:Configuration=Development --urls="https://localhost:5678"

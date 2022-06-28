@@ -7,12 +7,6 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
-
 var builder = Host.CreateDefaultBuilder();
 
 builder.ConfigureAppConfiguration((hostingContext, config) =>
@@ -24,6 +18,7 @@ builder.ConfigureAppConfiguration((hostingContext, config) =>
     .UseSerilog((context, services, configuration) => configuration
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(services)
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
         .Enrich.FromLogContext()
         .WriteTo.Console())
     .ConfigureServices((hostContext, services) =>
@@ -31,8 +26,6 @@ builder.ConfigureAppConfiguration((hostingContext, config) =>
         // Add MT service bus
         services.AddMassTransit(mt =>
         {
-            mt.AddDelayedMessageScheduler();
-
             mt.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host(hostContext.Configuration.GetValue<string>("ServiceBus:Uri"), host =>
@@ -40,8 +33,6 @@ builder.ConfigureAppConfiguration((hostingContext, config) =>
                     host.Username("guest");
                     host.Password("guest");
                 });
-                cfg.UseDelayedMessageScheduler();
-                cfg.UseInMemoryOutbox();
             });
         });
         services.AddHostedService<MessagePublisher>();
